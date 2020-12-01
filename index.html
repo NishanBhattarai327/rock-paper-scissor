@@ -12,30 +12,50 @@
             playerSelection = playerSelection.toLowerCase();
             
             if (playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors") {
-                return "invalid input";
+                return {message:"invalid input", point: 0};
             }
 
             if (playerSelection === computerSelection) {
-                return "Draw";
+                return {message:"Draw", point: 0};
             }
             else if (playerSelection === "rock" && computerSelection === "scissors") {
-                return "You Win! rock beats scissors";
+                return {message:"You Win! rock beats scissors", point: 1};
             }
             else if (playerSelection === "paper" && computerSelection === "rock") {
-                return "You Win! paper beats rock";
+                return {message:"You Win! paper beats rock", point: 1};
             }
             else if (playerSelection === "scissors" && computerSelection === "paper") {
-                return "You Win! scissors beats paper";
+                return {message:"You Win! scissors beats paper", point: 1};
             }
             else {
-                return `You Lose! ${computerSelection} beats ${playerSelection}`;
+                return {message:`You Lose! ${computerSelection} beats ${playerSelection}`, point: -1};
             }
         }
 
         function game() {
+            let playerScore = 0;
+            let computerScore = 0;
             for(let i = 0; i < 5; i++) {
                 let playerPlay = prompt("Rock, Paper or Scissors");
-                console.log(playRound(playerPlay, computerPlay()));
+                let round = playRound(playerPlay, computerPlay());
+                if (round.point === 1) {
+                    playerScore++;
+                }
+                else if (round.point === -1) {
+                    computerScore++;
+                }
+
+                console.log(round.message, "player: ", playerScore, "computer: ", computerScore);
+            }
+
+            if (playerScore > computerScore) {
+                console.log("You won the Game");
+            }
+            else if (playerScore < computerScore) {
+                console.log("Computer won the Game");
+            }
+            else {
+                console.log("Draw");
             }
         }
         
