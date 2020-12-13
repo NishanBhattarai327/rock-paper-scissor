@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>Rock - Paper - Scissors</title>
     <style type="text/css">
+        #game {
+            text-align: center;
+        }
         .choice {
             margin: 5px;
             display: inline-block;
@@ -21,6 +24,10 @@
         .human .choice:active {
             background: #ccc !important;
         }
+        .options {
+            display: flex;
+            justify-content: space-around;
+        }
     </style>
 </head>
 <body>
@@ -29,11 +36,13 @@
         <div>Round: <span id="round">0</span></div>
         <div class="options">
             <div class="human">
+                <div class="type">Human</div>
                 <div class="choice rock" onclick="game('rock')">Rock</div>
                 <div class="choice paper" onclick="game('paper')">Paper</div>
                 <div class="choice scissors" onclick="game('scissors')">Scissors</div>
             </div>
             <div class="computer">
+                <div class="type">Computer</div>
                 <div class="choice rock">Rock</div>
                 <div class="choice paper">Paper</div>
                 <div class="choice scissors">Scissors</div>
@@ -44,6 +53,9 @@
     </div>
 
     <script>
+        //at the start of the game
+        output("", 0, 0);
+
         let playerScore = 0;
         let computerScore = 0;
         let roundCounter = 0;
