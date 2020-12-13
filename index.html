@@ -16,32 +16,34 @@
             cursor: pointer;
         }
         .human .choice:hover {
-            background: #efefef;
+            background: #ddd !important;
         }
         .human .choice:active {
-            background: #ccc;
+            background: #ccc !important;
         }
     </style>
 </head>
 <body>
-    <div class="options">
-        <div class="human">
-            <div class="choice rock" onclick="game('rock')">Rock</div>
-            <div class="choice paper" onclick="game('paper')">Paper</div>
-            <div class="choice scissors" onclick="game('scissors')">Scissors</div>
+    <div id="game">
+        <h1>Rock Paper Scissors</h1>
+        <div>Round: <span id="round">0</span></div>
+        <div class="options">
+            <div class="human">
+                <div class="choice rock" onclick="game('rock')">Rock</div>
+                <div class="choice paper" onclick="game('paper')">Paper</div>
+                <div class="choice scissors" onclick="game('scissors')">Scissors</div>
+            </div>
+            <div class="computer">
+                <div class="choice rock">Rock</div>
+                <div class="choice paper">Paper</div>
+                <div class="choice scissors">Scissors</div>
+            </div>
         </div>
-        <div class="computer">
-            <div class="choice rock">Rock</div>
-            <div class="choice paper">Paper</div>
-            <div class="choice scissors">Scissors</div>
-        </div>
-        <div id="message">
-            
-        </div>
+        <div id="message"></div>
+        <button onclick="resetGame()">reset</button>
     </div>
 
     <script>
-        let message = document.getElementById('message');
         let playerScore = 0;
         let computerScore = 0;
         let roundCounter = 0;
@@ -55,26 +57,35 @@
                     computerScore++;
                 }
 
-                output(round.message + '<br>' + "player: " + playerScore + " computer: " + computerScore);
+                output(round.message, playerScore, computerScore);
+                roundCounter++;
             }
 
             else {
                 if (playerScore > computerScore) {
-                    output("You won the Game");
+                    output("You won the Game", playerScore, computerScore);
                 }
                 else if (playerScore < computerScore) {
-                    output("Computer won the Game");
+                    output("Computer won the Game", playerScore, computerScore);
                 }
                 else {
-                    output("Draw");
+                    output("Draw Game", playerScore, computerScore);
                 }
-
-                roundCounter = 0;
-                computerScore = 0;
-                playerScore = 0;
             }
-
-            roundCounter++;
+            //show which round is this
+            showRound(round);
+        }
+        function resetGame() {
+            playerScore = 0;
+            computerScore = 0;
+            roundCounter = 0;
+            output("", 0, 0);
+            showRound(roundCounter);
+            clearPreviousStyle('human');
+            clearPreviousStyle('computer');
+        }
+        function showRound(round) {
+            document.getElementById('round').innerHTML = roundCounter;
         }
 
         function computerPlay() {
@@ -106,7 +117,7 @@
             }
 
             if (playerSelection === computerSelection) {
-                return {message:"Draw", point: 0};
+                return {message:`Draw! ${computerSelection} and ${playerSelection} are same`, point: 0};
             }
             else if (playerSelection === "rock" && computerSelection === "scissors") {
                 return {message:"You Win! rock beats scissors", point: 1};
@@ -122,8 +133,8 @@
             }
         }
 
-        function output(msg) {
-            message.innerHTML = msg;
+        function output(msg, playerScore, computerScore) {
+            document.getElementById('message').innerHTML = "Player: " + playerScore + " Computer: " + computerScore + "<br>" + msg;
         }
 
     </script>
