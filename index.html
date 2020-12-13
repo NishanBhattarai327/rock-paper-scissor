@@ -1,4 +1,7 @@
+<!DOCTYPE html>
+<html>
 <head>
+    <meta charset="utf-8">
     <title>Rock - Paper - Scissors</title>
     <style type="text/css">
         .choice {
@@ -25,7 +28,7 @@
         <div class="human">
             <div class="choice rock" onclick="game('rock')">Rock</div>
             <div class="choice paper" onclick="game('paper')">Paper</div>
-            <div class="choice scissor" onclick="game('scissors')">Scissors</div>
+            <div class="choice scissors" onclick="game('scissors')">Scissors</div>
         </div>
         <div class="computer">
             <div class="choice rock">Rock</div>
@@ -79,22 +82,24 @@
             return choice[Math.floor(Math.random() * 3)];
         }
 
-        function clearPreviousStyle() {
-            document.querySelector(".computer").querySelectorAll(":scope .choice").forEach((choice) => {
+        function clearPreviousStyle(type) {
+            document.querySelector("." + type).querySelectorAll(":scope .choice").forEach((choice) => {
                 choice.style.background = "#fff";
             });
         }
-        function styleSelection(styleClass) {
-            document.querySelector(".computer ." + styleClass).style.background = "#efefef";
+        function styleSelection(type, styleClass) {
+            document.querySelector("." + type +" ." + styleClass).style.background = "#efefef";
         }
         function playRound(playerSelection) {
             playerSelection = playerSelection.toLowerCase();
             let computerSelection = computerPlay();
 
-            //clear the previous computer selection style
-            clearPreviousStyle();
+            //clear the previous selection style
+            clearPreviousStyle("computer");
+            clearPreviousStyle("human");
             //style the computer selection
-            styleSelection(computerSelection);
+            styleSelection("computer", computerSelection);
+            styleSelection("human", playerSelection);
             
             if (playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors") {
                 return {message:"invalid input", point: 0};
@@ -123,3 +128,4 @@
 
     </script>
 </body>
+</html>
