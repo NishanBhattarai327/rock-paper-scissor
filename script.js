@@ -36,21 +36,6 @@ function game(playerGuess) {
     }
 }
 
-function resetGame() {
-    playerScore = 0;
-    computerScore = 0;
-    roundCount = 0;
-    render("", 0, 0, 0);
-    clearPreviousStyleOf('human');
-    clearPreviousStyleOf('computer');
-}
-
-function randomGuess() {
-    let choice = ['rock', 'paper', 'scissors'];
-    return choice[Math.floor(Math.random() * 3)];
-}
-
-
 function playRound(playerGuess, computerGuess) {
     playerGuess = playerGuess.toLowerCase();
 
@@ -81,11 +66,25 @@ function playRound(playerGuess, computerGuess) {
     }
 }
 
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    roundCount = 0;
+    render("", 0, 0, 0);
+    clearPreviousStyleOf('human');
+    clearPreviousStyleOf('computer');
+}
+
 function render(msg, playerScore, computerScore, roundCount) {
     document.getElementById('message').innerHTML = msg;
     document.getElementById('human-score').innerHTML = playerScore;
     document.getElementById('computer-score').innerHTML = computerScore;
     document.getElementById('round-count').innerHTML = roundCount;
+}
+
+function randomGuess() {
+    let choice = ['rock', 'paper', 'scissors'];
+    return choice[Math.floor(Math.random() * 3)];
 }
 
 function clearPreviousStyleOf(parentClass) {
