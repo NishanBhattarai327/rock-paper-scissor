@@ -6,10 +6,17 @@
             display: inline-block;
             width: 100px;
             height: 100px;
-            background: grey;
+            background: #fff;
+            border: 2px dotted black;
         }
         .human .choice {
             cursor: pointer;
+        }
+        .human .choice:hover {
+            background: #efefef;
+        }
+        .human .choice:active {
+            background: #ccc;
         }
     </style>
 </head>
@@ -23,7 +30,7 @@
         <div class="computer">
             <div class="choice rock">Rock</div>
             <div class="choice paper">Paper</div>
-            <div class="choice scissor">Scissor</div>
+            <div class="choice scissors">Scissors</div>
         </div>
         <div id="message">
             
@@ -72,9 +79,23 @@
             return choice[Math.floor(Math.random() * 3)];
         }
 
+        function clearPreviousStyle() {
+            document.querySelector(".computer").querySelectorAll(":scope .choice").forEach((choice) => {
+                choice.style.background = "#fff";
+            });
+        }
+        function styleSelection(styleClass) {
+            document.querySelector(".computer ." + styleClass).style.background = "#efefef";
+        }
         function playRound(playerSelection) {
             playerSelection = playerSelection.toLowerCase();
             let computerSelection = computerPlay();
+
+            //clear the previous computer selection style
+            clearPreviousStyle();
+            //style the computer selection
+            styleSelection(computerSelection);
+            
             if (playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors") {
                 return {message:"invalid input", point: 0};
             }
