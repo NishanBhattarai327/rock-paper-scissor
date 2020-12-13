@@ -1,5 +1,9 @@
 const TOTAL_ROUND = 5;
 
+const PLAYER_WON = 1;
+const COMPUTER_WON = -1;
+const DRAW = 0;
+
 let playerScore = 0;
 let computerScore = 0;
 let roundCount = 0;
@@ -8,26 +12,26 @@ let roundCount = 0;
 function game(playerGuess) {
     if (roundCount < TOTAL_ROUND) {
         let round = playRound(playerGuess, randomGuess());
-        if (round.point === 1) {
+        if (round.status === PLAYER_WON) {
             playerScore++;
         }
-        else if (round.point === -1) {
+        else if (round.status === COMPUTER_WON) {
             computerScore++;
         }
 
-        display(round.message, playerScore, computerScore, roundCount);
+        render(round.message, playerScore, computerScore, roundCount);
         roundCount++;
     }
 
     else {
         if (playerScore > computerScore) {
-            display("You won the Game", playerScore, computerScore, roundCount);
+            render("You won the Game", playerScore, computerScore, roundCount);
         }
         else if (playerScore < computerScore) {
-            display("Computer won the Game", playerScore, computerScore, roundCount);
+            render("Computer won the Game", playerScore, computerScore, roundCount);
         }
         else {
-            display("Draw Game", playerScore, computerScore, roundCount);
+            render("Draw Game", playerScore, computerScore, roundCount);
         }
     }
 }
@@ -36,7 +40,7 @@ function resetGame() {
     playerScore = 0;
     computerScore = 0;
     roundCount = 0;
-    display("", 0, 0, 0);
+    render("", 0, 0, 0);
     clearPreviousStyleOf('human');
     clearPreviousStyleOf('computer');
 }
@@ -57,27 +61,27 @@ function playRound(playerGuess, computerGuess) {
     changeStyleOf("human", playerGuess);
     
     if (playerGuess !== "rock" && playerGuess !== "paper" && playerGuess !== "scissors") {
-        return {message:"invalid input", point: 0};
+        return {message:"invalid input", status: 0};
     }
 
     if (playerGuess === computerGuess) {
-        return {message:`Draw! ${computerGuess} and ${playerGuess} are same`, point: 0};
+        return {message:`Draw! ${computerGuess} and ${playerGuess} are same`, status: 0};
     }
     else if (playerGuess === "rock" && computerGuess === "scissors") {
-        return {message:"You Win! rock beats scissors", point: 1};
+        return {message:"You Win! rock beats scissors", status: PLAYER_WON};
     }
     else if (playerGuess === "paper" && computerGuess === "rock") {
-        return {message:"You Win! paper beats rock", point: 1};
+        return {message:"You Win! paper beats rock", status: PLAYER_WON};
     }
     else if (playerGuess === "scissors" && computerGuess === "paper") {
-        return {message:"You Win! scissors beats paper", point: 1};
+        return {message:"You Win! scissors beats paper", status: PLAYER_WON};
     }
     else {
-        return {message:`You Lose! ${computerGuess} beats ${playerGuess}`, point: -1};
+        return {message:`You Lose! ${computerGuess} beats ${playerGuess}`, status: COMPUTER_WON};
     }
 }
 
-function display(msg, playerScore, computerScore, roundCount) {
+function render(msg, playerScore, computerScore, roundCount) {
     document.getElementById('message').innerHTML = msg;
     document.getElementById('human-score').innerHTML = playerScore;
     document.getElementById('computer-score').innerHTML = computerScore;
