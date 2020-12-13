@@ -7,31 +7,35 @@ const DRAW = 0;
 let playerScore = 0;
 let computerScore = 0;
 let roundCount = 0;
+let gameOver = false;
 
 
 function game(playerGuess) {
-    let round = playRound(playerGuess, randomGuess());
-    if (roundCount < TOTAL_ROUND) {
-        if (round.status === PLAYER_WON) {
-            playerScore++;
-        }
-        else if (round.status === COMPUTER_WON) {
-            computerScore++;
+    if (!gameOver) {
+        let round = playRound(playerGuess, randomGuess());
+        if (roundCount < TOTAL_ROUND) {
+            if (round.status === PLAYER_WON) {
+                playerScore++;
+            }
+            else if (round.status === COMPUTER_WON) {
+                computerScore++;
+            }
+
+            render(round.message, playerScore, computerScore, roundCount);
+            roundCount++;
         }
 
-        render(round.message, playerScore, computerScore, roundCount);
-        roundCount++;
-    }
-
-    else {
-        if (playerScore > computerScore) {
-            render("You won the Game <br>" + round.message, playerScore, computerScore, roundCount);
-        }
-        else if (playerScore < computerScore) {
-            render("Computer won the Game <br>" + round.message, playerScore, computerScore, roundCount);
-        }
         else {
-            render("Draw Game <br>" + round.message, playerScore, computerScore, roundCount);
+            if (playerScore > computerScore) {
+                render("You won the Game <br>" + round.message, playerScore, computerScore, roundCount);
+            }
+            else if (playerScore < computerScore) {
+                render("Computer won the Game <br>" + round.message, playerScore, computerScore, roundCount);
+            }
+            else {
+                render("Draw Game <br>" + round.message, playerScore, computerScore, roundCount);
+            }
+            gameOver = true;
         }
     }
 }
@@ -67,6 +71,7 @@ function playRound(playerGuess, computerGuess) {
 }
 
 function resetGame() {
+    gameOver = false;
     playerScore = 0;
     computerScore = 0;
     roundCount = 0;
