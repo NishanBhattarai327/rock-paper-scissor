@@ -1,16 +1,80 @@
 <head>
     <title>Rock - Paper - Scissors</title>
+    <style type="text/css">
+        .choice {
+            margin: 5px;
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background: grey;
+        }
+        .human .choice {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+    <div class="options">
+        <div class="human">
+            <div class="choice rock" onclick="game('rock')">Rock</div>
+            <div class="choice paper" onclick="game('paper')">Paper</div>
+            <div class="choice scissor" onclick="game('scissors')">Scissors</div>
+        </div>
+        <div class="computer">
+            <div class="choice rock">Rock</div>
+            <div class="choice paper">Paper</div>
+            <div class="choice scissor">Scissor</div>
+        </div>
+        <div id="message">
+            
+        </div>
+    </div>
+
     <script>
+        let message = document.getElementById('message');
+        let playerScore = 0;
+        let computerScore = 0;
+        let roundCounter = 0;
+        function game(playerPlay) {
+            if (roundCounter < 5) {
+                let round = playRound(playerPlay);
+                if (round.point === 1) {
+                    playerScore++;
+                }
+                else if (round.point === -1) {
+                    computerScore++;
+                }
+
+                output(round.message + '<br>' + "player: " + playerScore + " computer: " + computerScore);
+            }
+
+            else {
+                if (playerScore > computerScore) {
+                    output("You won the Game");
+                }
+                else if (playerScore < computerScore) {
+                    output("Computer won the Game");
+                }
+                else {
+                    output("Draw");
+                }
+
+                roundCounter = 0;
+                computerScore = 0;
+                playerScore = 0;
+            }
+
+            roundCounter++;
+        }
+
         function computerPlay() {
             let choice = ['rock', 'paper', 'scissors'];
             return choice[Math.floor(Math.random() * 3)];
         }
 
-        function playRound(playerSelection, computerSelection) {
+        function playRound(playerSelection) {
             playerSelection = playerSelection.toLowerCase();
-            
+            let computerSelection = computerPlay();
             if (playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors") {
                 return {message:"invalid input", point: 0};
             }
@@ -32,33 +96,9 @@
             }
         }
 
-        function game() {
-            let playerScore = 0;
-            let computerScore = 0;
-            for(let i = 0; i < 5; i++) {
-                let playerPlay = prompt("Rock, Paper or Scissors");
-                let round = playRound(playerPlay, computerPlay());
-                if (round.point === 1) {
-                    playerScore++;
-                }
-                else if (round.point === -1) {
-                    computerScore++;
-                }
-
-                console.log(round.message, "player: ", playerScore, "computer: ", computerScore);
-            }
-
-            if (playerScore > computerScore) {
-                console.log("You won the Game");
-            }
-            else if (playerScore < computerScore) {
-                console.log("Computer won the Game");
-            }
-            else {
-                console.log("Draw");
-            }
+        function output(msg) {
+            message.innerHTML = msg;
         }
-        
-        game();
+
     </script>
 </body>
