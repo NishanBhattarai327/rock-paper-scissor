@@ -10,8 +10,8 @@ let roundCount = 0;
 
 
 function game(playerGuess) {
+    let round = playRound(playerGuess, randomGuess());
     if (roundCount < TOTAL_ROUND) {
-        let round = playRound(playerGuess, randomGuess());
         if (round.status === PLAYER_WON) {
             playerScore++;
         }
@@ -25,13 +25,13 @@ function game(playerGuess) {
 
     else {
         if (playerScore > computerScore) {
-            render("You won the Game", playerScore, computerScore, roundCount);
+            render("You won the Game <br>" + round.message, playerScore, computerScore, roundCount);
         }
         else if (playerScore < computerScore) {
-            render("Computer won the Game", playerScore, computerScore, roundCount);
+            render("Computer won the Game <br>" + round.message, playerScore, computerScore, roundCount);
         }
         else {
-            render("Draw Game", playerScore, computerScore, roundCount);
+            render("Draw Game <br>" + round.message, playerScore, computerScore, roundCount);
         }
     }
 }
