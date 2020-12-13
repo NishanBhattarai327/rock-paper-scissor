@@ -1,0 +1,24 @@
+ #game {
+    text-align: center;
+}
+.choice {
+    margin: 5px;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border: 2px dotted black;
+}
+.human .choice {
+    cursor: pointer;
+}
+.human .choice:hover {
+    background: #ddd !important;
+}
+.human .choice:active {
+    background: #ccc !important;
+}
+.options {
+    display: flex;
+    justify-content: space-around;
+}

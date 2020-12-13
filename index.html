@@ -3,37 +3,13 @@
 <head>
     <meta charset="utf-8">
     <title>Rock - Paper - Scissors</title>
-    <style type="text/css">
-        #game {
-            text-align: center;
-        }
-        .choice {
-            margin: 5px;
-            display: inline-block;
-            width: 100px;
-            height: 100px;
-            background: #fff;
-            border: 2px dotted black;
-        }
-        .human .choice {
-            cursor: pointer;
-        }
-        .human .choice:hover {
-            background: #ddd !important;
-        }
-        .human .choice:active {
-            background: #ccc !important;
-        }
-        .options {
-            display: flex;
-            justify-content: space-around;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div id="game">
         <h1>Rock Paper Scissors</h1>
-        <div>Round: <span id="round">0</span></div>
+        <div id="round"><span id="round-count">0</span></div>
+        <div id="score"><span id="human-score">0</span> <span id="computer-score">0</span></div>
         <div class="options">
             <div class="human">
                 <div class="type">Human</div>
@@ -52,103 +28,6 @@
         <button onclick="resetGame()">reset</button>
     </div>
 
-    <script>
-        //at the start of the game
-        output("", 0, 0);
-
-        let playerScore = 0;
-        let computerScore = 0;
-        let roundCounter = 0;
-        function game(playerPlay) {
-            if (roundCounter < 5) {
-                let round = playRound(playerPlay);
-                if (round.point === 1) {
-                    playerScore++;
-                }
-                else if (round.point === -1) {
-                    computerScore++;
-                }
-
-                output(round.message, playerScore, computerScore);
-                roundCounter++;
-            }
-
-            else {
-                if (playerScore > computerScore) {
-                    output("You won the Game", playerScore, computerScore);
-                }
-                else if (playerScore < computerScore) {
-                    output("Computer won the Game", playerScore, computerScore);
-                }
-                else {
-                    output("Draw Game", playerScore, computerScore);
-                }
-            }
-            //show which round is this
-            showRound(round);
-        }
-        function resetGame() {
-            playerScore = 0;
-            computerScore = 0;
-            roundCounter = 0;
-            output("", 0, 0);
-            showRound(roundCounter);
-            clearPreviousStyle('human');
-            clearPreviousStyle('computer');
-        }
-        function showRound(round) {
-            document.getElementById('round').innerHTML = roundCounter;
-        }
-
-        function computerPlay() {
-            let choice = ['rock', 'paper', 'scissors'];
-            return choice[Math.floor(Math.random() * 3)];
-        }
-
-        function clearPreviousStyle(type) {
-            document.querySelector("." + type).querySelectorAll(":scope .choice").forEach((choice) => {
-                choice.style.background = "#fff";
-            });
-        }
-        function styleSelection(type, styleClass) {
-            document.querySelector("." + type +" ." + styleClass).style.background = "#efefef";
-        }
-        function playRound(playerSelection) {
-            playerSelection = playerSelection.toLowerCase();
-            let computerSelection = computerPlay();
-
-            //clear the previous selection style
-            clearPreviousStyle("computer");
-            clearPreviousStyle("human");
-            //style the computer selection
-            styleSelection("computer", computerSelection);
-            styleSelection("human", playerSelection);
-            
-            if (playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors") {
-                return {message:"invalid input", point: 0};
-            }
-
-            if (playerSelection === computerSelection) {
-                return {message:`Draw! ${computerSelection} and ${playerSelection} are same`, point: 0};
-            }
-            else if (playerSelection === "rock" && computerSelection === "scissors") {
-                return {message:"You Win! rock beats scissors", point: 1};
-            }
-            else if (playerSelection === "paper" && computerSelection === "rock") {
-                return {message:"You Win! paper beats rock", point: 1};
-            }
-            else if (playerSelection === "scissors" && computerSelection === "paper") {
-                return {message:"You Win! scissors beats paper", point: 1};
-            }
-            else {
-                return {message:`You Lose! ${computerSelection} beats ${playerSelection}`, point: -1};
-            }
-        }
-
-        function output(msg, playerScore, computerScore) {
-            document.getElementById('message').innerHTML = "Player: " + playerScore + " Computer: " + computerScore + "<br>" + msg;
-        }
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
