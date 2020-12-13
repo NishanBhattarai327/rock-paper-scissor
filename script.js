@@ -2,11 +2,11 @@ const TOTAL_ROUND = 5;
 
 let playerScore = 0;
 let computerScore = 0;
-let roundCounter = 0;
+let roundCount = 0;
 
 
 function game(playerGuess) {
-    if (roundCounter < TOTAL_ROUND) {
+    if (roundCount < TOTAL_ROUND) {
         let round = playRound(playerGuess, randomGuess());
         if (round.point === 1) {
             playerScore++;
@@ -15,35 +15,30 @@ function game(playerGuess) {
             computerScore++;
         }
 
-        output(round.message, playerScore, computerScore);
-        roundCounter++;
+        display(round.message, playerScore, computerScore, roundCount);
+        roundCount++;
     }
 
     else {
         if (playerScore > computerScore) {
-            output("You won the Game", playerScore, computerScore);
+            display("You won the Game", playerScore, computerScore, roundCount);
         }
         else if (playerScore < computerScore) {
-            output("Computer won the Game", playerScore, computerScore);
+            display("Computer won the Game", playerScore, computerScore, roundCount);
         }
         else {
-            output("Draw Game", playerScore, computerScore);
+            display("Draw Game", playerScore, computerScore, roundCount);
         }
     }
-    
-    showRound(roundCounter);
 }
+
 function resetGame() {
     playerScore = 0;
     computerScore = 0;
-    roundCounter = 0;
-    output("", 0, 0);
-    showRound(roundCounter);
+    roundCount = 0;
+    display("", 0, 0, 0);
     clearPreviousStyleOf('human');
     clearPreviousStyleOf('computer');
-}
-function showRound(roundCount) {
-    document.getElementById('round-count').innerHTML = roundCount;
 }
 
 function randomGuess() {
@@ -82,15 +77,16 @@ function playRound(playerGuess, computerGuess) {
     }
 }
 
-function output(msg, playerScore, computerScore) {
+function display(msg, playerScore, computerScore, roundCount) {
     document.getElementById('message').innerHTML = msg;
     document.getElementById('human-score').innerHTML = playerScore;
     document.getElementById('computer-score').innerHTML = computerScore;
+    document.getElementById('round-count').innerHTML = roundCount;
 }
 
 function clearPreviousStyleOf(parentClass) {
-    document.querySelector("." + parentClass).querySelectorAll(":scope .choice").forEach((choice) => {
-        choice.style.background = "#fff";
+    document.querySelector("." + parentClass).querySelectorAll(":scope .choice").forEach((element) => {
+        element.style.background = "#fff";
     });
 }
 function changeStyleOf(parentClass, selfClass) {
