@@ -19,6 +19,7 @@
 .options {
     display: flex;
     justify-content: space-around;
+    margin-bottom: 30px;
 }
 
 .round {
@@ -52,6 +53,13 @@
     font-weight: 600;
 }
 
+.human .type {
+    color: #a10000;
+}
+.computer .type {
+    color: #a9c0a9e6;
+}
+
 .choice {
     text-align: center;
     margin: 10px;
@@ -66,8 +74,12 @@
     transition: transform .2s;
     opacity: 0.8;
 }
+.computer .choice {
+    background: #a9c0a9e6;
+}
 .human .choice {
     cursor: pointer;
+    background: #d8c5c5de;
 }
 .human .choice:hover {
     transform: scale(0.9);
@@ -79,4 +91,29 @@
     opacity: 1;
     transform: scale(1.2);
     z-index: 1;
+}
+
+.button {
+  display: inline-block;
+  padding: 5px 20px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #313131;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 5px #999;
+}
+
+.button:hover {
+    background-color: #121212;
+}
+
+.button:active {
+  background-color: #030303;
+  box-shadow: 0 2px #666;
+  transform: translateY(2px);
 }
