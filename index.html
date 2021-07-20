@@ -7,10 +7,19 @@
     <script src="https://kit.fontawesome.com/10451afa78.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="game">
-        <h1>Rock Paper Scissors</h1>
-        <div id="round"><span id="round-count">0</span></div>
-        <div id="score"><span id="human-score">0</span> <span id="computer-score">0</span></div>
+    <div class="game">
+        <header class='header'>
+            ROCK - PAPER - SCISSOR
+        </header>
+        <div class="round">
+            <span id="round-count">0</span>
+        </div>
+        <div class="score">
+            <span id="human-score">0</span> <span id="computer-score">0</span>
+        </div>
+        <div id="message" class="message">
+            Choose Weapon
+        </div>
         <div class="options">
             <div class="human">
                 <div class="type">Human</div>
@@ -25,7 +34,6 @@
                 <div class="choice scissors"><i class="fas fa-hand-scissors"></i></div>
             </div>
         </div>
-        <div id="message"></div>
         <button onclick="resetGame()">reset</button>
     </div>
 

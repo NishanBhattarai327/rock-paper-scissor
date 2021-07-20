@@ -27,13 +27,13 @@ function game(playerGuess) {
 
         else {
             if (playerScore > computerScore) {
-                render("You won the Game <br>" + round.message, playerScore, computerScore, roundCount);
+                render("You won the Round <br>" + round.message, playerScore, computerScore, roundCount);
             }
             else if (playerScore < computerScore) {
-                render("Computer won the Game <br>" + round.message, playerScore, computerScore, roundCount);
+                render("Computer won the Round <br>" + round.message, playerScore, computerScore, roundCount);
             }
             else {
-                render("Draw Game <br>" + round.message, playerScore, computerScore, roundCount);
+                render("Draw Round <br>" + round.message, playerScore, computerScore, roundCount);
             }
             gameOver = true;
         }
@@ -43,11 +43,8 @@ function game(playerGuess) {
 function playRound(playerGuess, computerGuess) {
     playerGuess = playerGuess.toLowerCase();
 
-    clearPreviousStyleOf("computer");
-    clearPreviousStyleOf("human");
-
-    changeStyleOf("computer", computerGuess);
-    changeStyleOf("human", playerGuess);
+    changeStyleOf('computer', computerGuess);
+    changeStyleOf('human', playerGuess);
     
     if (playerGuess !== "rock" && playerGuess !== "paper" && playerGuess !== "scissors") {
         return {message:"invalid input", status: 0};
@@ -75,9 +72,9 @@ function resetGame() {
     playerScore = 0;
     computerScore = 0;
     roundCount = 0;
-    render("", 0, 0, 0);
-    clearPreviousStyleOf('human');
-    clearPreviousStyleOf('computer');
+    render("Choose Weapon", 0, 0, 0);
+    clearSelectedStyle('computer');
+    clearSelectedStyle('human');
 }
 
 function render(msg, playerScore, computerScore, roundCount) {
@@ -92,12 +89,16 @@ function randomGuess() {
     return choice[Math.floor(Math.random() * 3)];
 }
 
-function clearPreviousStyleOf(parentClass) {
-    document.querySelector("." + parentClass).querySelectorAll(":scope .choice").forEach((element) => {
-        element.style.background = "#fff";
-    });
+function clearSelectedStyle(parent) {
+    let selectedStyle = document.querySelector(`.${parent}`).querySelectorAll('.selected');
+    if (selectedStyle) {
+        selectedStyle.forEach((elem) => {
+            elem.classList.remove('selected');
+        });
+    }
 }
-function changeStyleOf(parentClass, selfClass) {
-    document.querySelector("." + parentClass +" ." + selfClass).style.background = "#efefef";
+function changeStyleOf(parent, guess) {
+    clearSelectedStyle(parent);
+    document.querySelector(`.${parent} .${guess}`).classList.add('selected');
 }
 
