@@ -1,13 +1,22 @@
  #game {
     text-align: center;
 }
+
+.options {
+    display: flex;
+    justify-content: space-around;
+}
+
 .choice {
     margin: 5px;
+    padding: 20px;
     display: inline-block;
     width: 100px;
     height: 100px;
     background: #fff;
     border: 2px dotted black;
+    border-radius: 50%;
+    font-size: 90px;
 }
 .human .choice {
     cursor: pointer;
@@ -18,7 +27,7 @@
 .human .choice:active {
     background: #ccc !important;
 }
-.options {
-    display: flex;
-    justify-content: space-around;
+
+.computer .choice {
+    opacity: 0.7;
 }
