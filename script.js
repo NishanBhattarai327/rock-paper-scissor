@@ -9,6 +9,20 @@ let computerScore = 0;
 let roundCount = 0;
 let gameOver = false;
 
+/*for game over POPUP message*/
+let popup = document.querySelector('.popup');
+window.addEventListener('click', (event) => {
+    if (event.target == popup) {
+        hidePopup();
+    }
+});
+let popupClose = document.querySelector('.popup-close');
+popupClose.addEventListener('click', (e) => {
+    hidePopup();
+});
+
+let popupGameOverMsg = document.querySelector('.game-over-message');
+/*************/
 
 function game(playerGuess) {
     if (!gameOver) {
@@ -27,16 +41,19 @@ function game(playerGuess) {
 
         else {
             if (playerScore > computerScore) {
-                render("You won the Round <br>" + round.message, playerScore, computerScore, roundCount);
+                render(round.message, playerScore, computerScore, roundCount);
             }
             else if (playerScore < computerScore) {
-                render("Computer won the Round <br>" + round.message, playerScore, computerScore, roundCount);
+                render(round.message, playerScore, computerScore, roundCount);
             }
             else {
-                render("Draw Round <br>" + round.message, playerScore, computerScore, roundCount);
+                render(round.message, playerScore, computerScore, roundCount);
             }
             gameOver = true;
         }
+    }
+    else {
+        displayGameOverMsg();
     }
 }
 
@@ -65,6 +82,25 @@ function playRound(playerGuess, computerGuess) {
     else {
         return {message:`You Lose! ${computerGuess} beats ${playerGuess}`, status: COMPUTER_WON};
     }
+}
+
+function displayGameOverMsg() {
+    let msg = 'Game Is Over <br><br>';
+    if (playerScore > computerScore) {
+        console.log('player');
+        msg += `You Won! The Game by ${playerScore - computerScore} point`;
+    }
+    else if (playerScore < computerScore) {
+        console.log('computer');
+        msg += `Computer Won! The Game by ${computerScore - playerScore} point`;
+    }
+    else {
+        console.log('tie');
+        msg += "Tie Game";
+    }
+
+    showPopup();
+    popupGameOverMsg.innerHTML = msg;
 }
 
 function resetGame() {
@@ -102,3 +138,9 @@ function changeStyleOf(parent, guess) {
     document.querySelector(`.${parent} .${guess}`).classList.add('selected');
 }
 
+function showPopup() {
+    popup.style.display = 'block';
+}
+function hidePopup() {
+    popup.style.display = 'none';
+}
